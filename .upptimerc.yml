@@ -9,7 +9,7 @@ sites:
   - name: Webmail (HestiaCP)
     url: https://webmail.lasata.eu
   - name: Server S1 (HestiaCP)
-    url: https://s1.lasata.eu
+    url: https://s1.lasata.eu:8083
 
 status-website:
   cname: status.lasata.eu
