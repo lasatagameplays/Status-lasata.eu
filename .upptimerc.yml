@@ -13,11 +13,17 @@ sites:
 
 status-website:
   cname: status.lasata.eu
-  name: LASATA System Status
-  introTitle: "**LASATA** Monitorización Global"
-  introMessage: Bienvenido a la página oficial de estado. Aquí puedes comprobar en tiempo real la disponibilidad de todos nuestros servidores y servicios en la nube.
+  name: LASATA Status
+  introTitle: "Monitorización Global **LASATA**"
+  introMessage: "Bienvenido al centro de control. Supervisión en tiempo real de la infraestructura en la nube, servidores físicos y bases de datos. Actualizado cada 5 minutos."
   theme: dark
   publish: gh-pages
+  # URL de tu logo (Puedes cambiar esta URL por la de cualquier imagen tuya)
+  logoUrl: https://github.com/lasatagameplays/Status-lasata.eu/tree/master/assets/logo.png
+  # Barra de navegación superior para que puedan volver a tu web
+  navbar:
+    - title: Volver a la Web Principal
+      href: https://lasata.eu
 
 i18n:
   activeIncidents: Incidentes Activos
