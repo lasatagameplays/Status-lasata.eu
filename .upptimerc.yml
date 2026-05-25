@@ -13,8 +13,8 @@ sites:
 
 status-website:
   cname: status.lasata.eu
-  name: LASATA Status
-  introTitle: "Monitorización Global **LASATA**"
+  name: Status of lasata.eu 
+  introTitle: "Monitorización Global de **LASATA.EU**"
   introMessage: "Bienvenido al centro de control. Supervisión en tiempo real de la infraestructura en la nube, servidores físicos y bases de datos. Actualizado cada 5 minutos."
   theme: dark
   publish: gh-pages
