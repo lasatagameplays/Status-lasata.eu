@@ -1,0 +1,198 @@
+{
+  "last_check": "2026-08-11T10:05:46Z",
+  "api_info": {
+    "status": "ok",
+    "count": 4,
+    "limit": 5
+  },
+  "components": [
+    {
+      "id": "web-principal",
+      "name_es": "Web Principal (LASATA)",
+      "name_en": "Main Web (LASATA)",
+      "url": "https://lasata.eu",
+      "scheduled_tasks": [
+        {
+          "cron": "0 1 * * 0",
+          "duration_minutes": 5,
+          "desc_es": "Reinicio semanal del sistema",
+          "desc_en": "Weekly system reboot"
+        },
+        {
+          "cron": "30 3 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de seguridad local",
+          "desc_en": "Local backup in progress"
+        },
+        {
+          "cron": "30 4 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de la base de datos MariaDB",
+          "desc_en": "MariaDB database backup"
+        },
+        {
+          "cron": "0 6 * * *",
+          "duration_minutes": 5,
+          "desc_es": "Sincronización FTP HestiaCP",
+          "desc_en": "HestiaCP FTP synchronization"
+        }
+      ],
+      "regions": {
+        "US": {
+          "status": "UP",
+          "latency": 985
+        },
+        "EU": {
+          "status": "UP",
+          "latency": 80
+        },
+        "ASIA": {
+          "status": "UP",
+          "latency": 857
+        }
+      },
+      "history_file": "history/web-principal/web-principal.json"
+    },
+    {
+      "id": "nube-privada",
+      "name_es": "Nube Privada (FileBrowser)",
+      "name_en": "Private Cloud (FileBrowser)",
+      "url": "https://archivos.lasata.eu",
+      "scheduled_tasks": [
+        {
+          "cron": "0 1 * * 0",
+          "duration_minutes": 5,
+          "desc_es": "Reinicio semanal del sistema",
+          "desc_en": "Weekly system reboot"
+        },
+        {
+          "cron": "30 3 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de seguridad local",
+          "desc_en": "Local backup in progress"
+        },
+        {
+          "cron": "30 4 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de la base de datos MariaDB",
+          "desc_en": "MariaDB database backup"
+        },
+        {
+          "cron": "0 6 * * *",
+          "duration_minutes": 5,
+          "desc_es": "Sincronización FTP HestiaCP",
+          "desc_en": "HestiaCP FTP synchronization"
+        }
+      ],
+      "regions": {
+        "US": {
+          "status": "UP",
+          "latency": 515
+        },
+        "EU": {
+          "status": "UP",
+          "latency": 35
+        },
+        "ASIA": {
+          "status": "UP",
+          "latency": 800
+        }
+      },
+      "history_file": "history/nube-privada/nube-privada.json"
+    },
+    {
+      "id": "webmail",
+      "name_es": "Webmail (Roundcube Webmail)",
+      "name_en": "Webmail (Roundcube Webmail)",
+      "url": "https://webmail.lasata.eu",
+      "scheduled_tasks": [
+        {
+          "cron": "0 1 * * 0",
+          "duration_minutes": 5,
+          "desc_es": "Reinicio semanal del sistema",
+          "desc_en": "Weekly system reboot"
+        },
+        {
+          "cron": "30 3 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de seguridad local",
+          "desc_en": "Local backup in progress"
+        },
+        {
+          "cron": "30 4 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de la base de datos MariaDB",
+          "desc_en": "MariaDB database backup"
+        },
+        {
+          "cron": "0 6 * * *",
+          "duration_minutes": 5,
+          "desc_es": "Sincronización FTP HestiaCP",
+          "desc_en": "HestiaCP FTP synchronization"
+        }
+      ],
+      "regions": {
+        "US": {
+          "status": "UP",
+          "latency": 395
+        },
+        "EU": {
+          "status": "UP",
+          "latency": 90
+        },
+        "ASIA": {
+          "status": "UP",
+          "latency": 1078
+        }
+      },
+      "history_file": "history/webmail/webmail.json"
+    },
+    {
+      "id": "server-s1",
+      "name_es": "Server S1 (HestiaCP)",
+      "name_en": "Server S1 (HestiaCP)",
+      "url": "https://s1.lasata.eu:8083",
+      "scheduled_tasks": [
+        {
+          "cron": "0 1 * * 0",
+          "duration_minutes": 5,
+          "desc_es": "Reinicio semanal del sistema",
+          "desc_en": "Weekly system reboot"
+        },
+        {
+          "cron": "30 3 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de seguridad local",
+          "desc_en": "Local backup in progress"
+        },
+        {
+          "cron": "30 4 * * *",
+          "duration_minutes": 10,
+          "desc_es": "Copia de la base de datos MariaDB",
+          "desc_en": "MariaDB database backup"
+        },
+        {
+          "cron": "0 6 * * *",
+          "duration_minutes": 5,
+          "desc_es": "Sincronización FTP HestiaCP",
+          "desc_en": "HestiaCP FTP synchronization"
+        }
+      ],
+      "regions": {
+        "US": {
+          "status": "UP",
+          "latency": 507
+        },
+        "EU": {
+          "status": "UP",
+          "latency": 5135
+        },
+        "ASIA": {
+          "status": "UP",
+          "latency": 847
+        }
+      },
+      "history_file": "history/server-s1/server-s1.json"
+    }
+  ]
+}

@@ -1,0 +1,1212 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UppWebLa | Estado del Sistema</title>
+    <link rel="icon" type="image/png" href="src/images/iconoNoChange.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --up-color: #2ea043;
+            --down-color: #f85149;
+            --warn-color: #d29922;
+            --border-color: #30363d;
+            --accent-blue: #58a6ff;
+            --maint-blue: #1f6feb;
+            --maint-bg: rgba(31, 111, 235, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .client-nav {
+            width: 100%;
+            background-color: #010409;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            box-sizing: border-box;
+        }
+
+        .client-nav-inner {
+            width: 100%;
+            max-width: 1050px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .client-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .client-logo {
+            height: 28px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .client-return-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+            .client-return-link:hover {
+                text-decoration: underline;
+                color: #79c0ff;
+            }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+            flex: 1;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .lang-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .lang-btn img {
+                width: 20px;
+                border-radius: 2px;
+            }
+
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: none;
+            flex-direction: column;
+            min-width: 140px;
+            z-index: 10;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+            .lang-menu.show {
+                display: flex;
+            }
+
+        .lang-option {
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+            .lang-option:hover {
+                background: #21262d;
+                color: var(--accent-blue);
+            }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+            .header h1 {
+                margin: 0 0 0.5rem 0;
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                margin: 0;
+                color: var(--text-muted);
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+        .global-status-banner {
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+            .global-status-banner.all-up {
+                background-color: rgba(46, 160, 67, 0.12);
+                color: var(--up-color);
+                border: 1px solid rgba(46, 160, 67, 0.4);
+            }
+
+            .global-status-banner.partial {
+                background-color: rgba(210, 153, 34, 0.12);
+                color: var(--warn-color);
+                border: 1px solid rgba(210, 153, 34, 0.4);
+            }
+
+            .global-status-banner.all-down {
+                background-color: rgba(248, 81, 73, 0.12);
+                color: var(--down-color);
+                border: 1px solid rgba(248, 81, 73, 0.4);
+            }
+
+        .component {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .component-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+            .component-name:hover {
+                color: var(--accent-blue);
+                text-decoration: underline;
+            }
+
+            .component-name svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
+                opacity: 0.7;
+            }
+
+        .component-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .regions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .region-box {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+            .region-box:hover {
+                transform: translateY(-2px);
+                border-color: var(--accent-blue);
+            }
+
+        .region-flag {
+            font-size: 1.2rem;
+        }
+
+        .region-name {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .region-latency {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-up {
+            background-color: rgba(46, 160, 67, 0.15);
+            color: var(--up-color);
+            border: 1px solid rgba(46, 160, 67, 0.4);
+        }
+
+        .status-down {
+            background-color: rgba(248, 81, 73, 0.15);
+            color: var(--down-color);
+            border: 1px solid rgba(248, 81, 73, 0.4);
+        }
+
+        .status-maint {
+            background-color: var(--maint-bg);
+            color: var(--maint-blue);
+            border: 1px solid rgba(31, 111, 235, 0.4);
+        }
+
+        .loader {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 2rem;
+            font-size: 1rem;
+        }
+
+        /* SECCIONES INCIDENCIAS Y MANTENIMIENTOS */
+        .incidents-section {
+            margin-top: 3.5rem;
+        }
+
+        .incidents-title {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+        }
+
+        .incident-card {
+            background: var(--card-bg);
+            border-left: 4px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+            .incident-card:hover {
+                transform: translateY(-2px);
+            }
+
+            .incident-card.active {
+                border-left-color: var(--warn-color);
+            }
+
+            .incident-card.resolved {
+                border-left-color: var(--up-color);
+            }
+
+            .incident-card.scheduled {
+                border-left-color: var(--maint-blue);
+            }
+
+            .incident-card.in_progress {
+                border-left-color: var(--warn-color);
+            }
+
+            .incident-card.completed {
+                border-left-color: var(--up-color);
+            }
+
+        .incident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .incident-title-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .incident-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-active {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--warn-color);
+            border: 1px solid rgba(210, 153, 34, 0.4);
+        }
+
+        .badge-resolved {
+            background: rgba(46, 160, 67, 0.15);
+            color: var(--up-color);
+            border: 1px solid rgba(46, 160, 67, 0.4);
+        }
+
+        .badge-scheduled {
+            background: var(--maint-bg);
+            color: var(--maint-blue);
+            border: 1px solid rgba(31, 111, 235, 0.4);
+        }
+
+        .incident-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .incident-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .no-incidents {
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 1rem;
+        }
+
+        /* MODAL AVANZADO */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.8rem;
+            width: 90%;
+            max-width: 650px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+            .modal-close:hover {
+                color: var(--text-main);
+            }
+
+        .modal-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .stat-box h4 {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .stat-box p {
+            margin: 5px 0 0 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--up-color);
+        }
+
+        .time-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .time-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+            .time-btn:hover {
+                border-color: var(--text-main);
+                color: var(--text-main);
+            }
+
+            .time-btn.active {
+                background: rgba(88, 166, 255, 0.15);
+                border-color: var(--accent-blue);
+                color: var(--accent-blue);
+            }
+
+        .chart-container {
+            height: 250px;
+            width: 100%;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding-bottom: 2rem;
+        }
+
+            footer a {
+                color: var(--text-main);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+                footer a:hover {
+                    color: var(--accent-blue);
+                    text-decoration: underline;
+                }
+
+        .footer-logo {
+            width: 400px;
+            max-width: 80%;
+            margin: 15px auto;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+            .footer-logo:hover {
+                opacity: 1;
+            }
+
+        /* 📱 MODO RESPONSIVE DEFINITIVO (Móviles y Zoom Extremo) */
+        @media (max-width: 768px) {
+            .regions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .component-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .modal-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="client-nav">
+        <div class="client-nav-inner">
+            <div class="client-brand">
+                <img id="clientLogo" class="client-logo" src="" alt="Logo">
+                <span id="clientName">Empresa</span>
+            </div>
+            <a id="clientLink" href="#" target="_blank" class="client-return-link">Volver a la web</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="top-bar">
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-btn" onclick="toggleLangMenu()">
+                    <img id="currentLangIcon" src="https://flagcdn.com/w20/es.png" alt="ES">
+                    <span id="currentLangText">Español</span>
+                    <span style="font-size: 0.7rem;">▼</span>
+                </div>
+                <div class="lang-menu" id="langMenu">
+                    <div class="lang-option" onclick="changeLang('es')"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</div>
+                    <div class="lang-option" onclick="changeLang('en')"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1 id="ui-global-title">Monitorización</h1>
+            <p id="ui-global-desc">Cargando...</p>
+        </div>
+
+        <div id="globalStatusBanner" class="global-status-banner all-up">
+            <span id="globalStatusText">Comprobando satélites... 🛰️</span>
+        </div>
+
+        <div id="status-container">
+            <div class="loader" id="ui-loading">Comprobando satélites... 🛰️</div>
+        </div>
+
+        <div class="incidents-section">
+            <h2 id="ui-maintenances-title" class="incidents-title">🔧 Mantenimientos Programados</h2>
+            <div id="maintenances-container"></div>
+        </div>
+
+        <div class="incidents-section">
+            <h2 id="ui-incidents-title" class="incidents-title">📢 Reportes e Incidencias</h2>
+            <div id="incidents-container"></div>
+        </div>
+
+        <div id="secure-footer-container"></div>
+    </div>
+
+    <div class="modal-overlay" id="chartModal" onclick="if(event.target===this) closeModal()">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">×</span>
+            <h2 id="modalCompTitle" style="margin-top:0;">--</h2>
+
+            <div class="modal-stats">
+                <div class="stat-box">
+                    <h4 id="ui-uptime">Disponibilidad</h4>
+                    <p id="modalUptime">--%</p>
+                </div>
+                <div class="stat-box">
+                    <h4 id="ui-avg-latency">Latencia media</h4>
+                    <p id="modalAvgLatency">--</p>
+                </div>
+            </div>
+
+            <div class="time-filters" id="time-filters-container">
+            </div>
+
+            <div class="chart-container">
+                <canvas id="latencyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const externalLinkIcon = `<svg viewBox="0 0 24 24"><path d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V11H19L18.9999 6.413L11.2071 14.2071L9.79289 12.7929L17.5849 5H13V3H21Z"></path></svg>`;
+
+        let userConfig = {
+            companyName: "LASATA", companyLogo: "", returnLinkTextES: "Volver", returnLinkTextEN: "Return", returnLinkUrl: "#",
+            languages: [{ "code": "es", "name": "Español", "flag": "es" }, { "code": "en", "name": "English", "flag": "gb" }]
+        };
+
+        const fallbackDicts = {
+            es: { title: "💻 Estado del Sistema", loading: "Comprobando...", error: "Error de lectura.", up: "En línea", down: "Caído", lastCheck: "Última comprobación: ", uptimeTitle: "Disponibilidad", avgLatency: "Latencia media", incidentsTitle: "📢 Reportes e Incidencias", noIncidents: "No hay incidencias reportadas.", maintenancesTitle: "🔧 Mantenimientos Programados", noMaintenances: "No hay mantenimientos programados.", ms: "ms", rights: "Todos los derechos reservados.", allOperational: "✅ Todos los sistemas operativos", partialOutage: "⚠️ Interrupción parcial", majorOutage: "🔴 Sistemas caídos", viewDetails: "Ver detalles completos", prevPage: "Anterior", nextPage: "Siguiente", page: "Página", incidentActive: "Incidencia Activa", incidentResolved: "Resuelto", statusResolvedManual: "Resuelto (Manual)", statusResolvedAuto: "Resuelto (Automático)", maintScheduled: "Programado", maintInProgress: "En Proceso", maintCompleted: "Completado", regions: { "US": "América", "EU": "Europa", "ASIA": "Asia" }, majorOutageTag: "Caída Completa", partialOutageTag: "Caída Parcial", operationalTag: "Operativo", maintInProgressTag: "En Mantenimiento", maintScheduledTag: "Mantenimiento Programado", nextUpdate: "Próxima actualización est. en:", updating: "Obteniendo datos de GitHub...", delayText: "Retraso en cola:", allTime: "Todo", scheduledTaskDefault: "Tarea Programada" },
+            en: { title: "💻 System Status", loading: "Checking...", error: "Read error.", up: "Online", down: "Offline", lastCheck: "Last check: ", uptimeTitle: "Uptime", avgLatency: "Average latency", incidentsTitle: "📢 Incident Reports", noIncidents: "No incidents reported.", maintenancesTitle: "🔧 Scheduled Maintenances", noMaintenances: "No scheduled maintenances.", ms: "ms", rights: "All rights reserved.", allOperational: "✅ All systems operational", partialOutage: "⚠️ Partial outage", majorOutage: "🔴 Major outage", viewDetails: "View full details", prevPage: "Previous", nextPage: "Next", page: "Page", incidentActive: "Active Incident", incidentResolved: "Resolved", statusResolvedManual: "Resolved (Manual)", statusResolvedAuto: "Resolved (Auto)", maintScheduled: "Scheduled", maintInProgress: "In Progress", maintCompleted: "Completed", regions: { "US": "America", "EU": "Europe", "ASIA": "Asia" }, majorOutageTag: "Complete Outage", partialOutageTag: "Partial Outage", operationalTag: "Operational", maintInProgressTag: "Under Maintenance", maintScheduledTag: "Scheduled Maintenance", nextUpdate: "Estimated next update in:", updating: "Fetching data from GitHub...", delayText: "Queue delay:", allTime: "All", scheduledTaskDefault: "Scheduled Task" }
+        };
+
+        let currentLang = localStorage.getItem('uppwebla_lang') || (navigator.language.startsWith('es') ? 'es' : 'en');
+        let dict = { ...(fallbackDicts[currentLang] || fallbackDicts['es']) };
+        let latestData = null, latestIncidents = null, latestMaintenances = null;
+        let myChart = null, activeHistoryFull = [], activeSummaryFull = [], activeRegKey = '';
+        let currentIncidentPage = 1, currentMaintenancePage = 1;
+        const itemsPerPage = 5;
+
+        let nextCheckTime = 0;
+        let isFetching = false;
+
+        // FUNCIONES DE IDIOMA QUE FALTABAN
+        function toggleLangMenu() {
+            const menu = document.getElementById('langMenu');
+            if (menu) menu.classList.toggle('show');
+        }
+
+        // Cierra el menú de idioma si haces clic fuera de él
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('langDropdown');
+            const menu = document.getElementById('langMenu');
+            if (dropdown && menu && !dropdown.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        async function checkApiBanner() {
+            try {
+                const res = await fetch(`data.json?t=${new Date().getTime()}`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data.api_info || data.api_info.status === 'ok') {
+                    const el = document.getElementById('api-warning-banner');
+                    if (el) el.remove();
+                    return;
+                }
+
+                const info = data.api_info;
+                let color = info.status === 'blocked' ? '#f85149' : '#d29922';
+                let bg = info.status === 'blocked' ? 'rgba(248, 81, 73, 0.1)' : 'rgba(210, 153, 34, 0.1)';
+                let icon = info.status === 'blocked' ? '🚨' : '⚠️';
+
+                // Lee el texto del diccionario de idiomas dinámico (es.json o en.json)
+                let textRaw = info.status === 'blocked'
+                    ? (dict.apiWarningBlocked || `<b>Monitorización detenida:</b> Tienes {count} webs. Añade GLOBALPING_API_KEY.`)
+                    : (dict.apiWarningRecommendation || `<b>Recomendación:</b> Modo anónimo ({count}/{limit} webs). Añade GLOBALPING_API_KEY.`);
+
+                // Inyecta los números reales
+                let text = textRaw.replace('{count}', info.count).replace('{limit}', info.limit);
+
+                const header = document.querySelector('.header');
+                if (header && !document.getElementById('api-warning-banner')) {
+                    header.insertAdjacentHTML('afterend', `<div id="api-warning-banner" style="background-color: ${bg}; border: 1px solid ${color}; color: ${color}; padding: 12px 20px; margin: 15px auto; border-radius: 8px; max-width: 800px; text-align: center; font-size: 0.95rem; line-height: 1.5;">${icon} ${text}</div>`);
+                } else if (document.getElementById('api-warning-banner')) {
+                    document.getElementById('api-warning-banner').innerHTML = `${icon} ${text}`;
+                }
+            } catch (e) { }
+        }
+
+        async function changeLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('uppwebla_lang', currentLang);
+
+            // 1. Establecer diccionario base por defecto
+            dict = { ...(fallbackDicts[currentLang] || fallbackDicts['es']) };
+
+            // 2. Intentar cargar el archivo de idioma externo desde la carpeta lang/
+            try {
+                const res = await fetch(`lang/${lang}.json?t=${new Date().getTime()}`);
+                if (res.ok) {
+                    const externalDict = await res.json();
+                    dict = { ...dict, ...externalDict };
+                }
+            } catch (e) {
+                console.warn(`No se pudo cargar lang/${lang}.json, usando diccionario por defecto.`);
+            }
+
+            // Actualizar textos fijos del HTML
+            if (document.getElementById('ui-maintenances-title')) {
+                document.getElementById('ui-maintenances-title').innerText = dict.maintenancesTitle;
+            }
+            if (document.getElementById('ui-incidents-title')) {
+                document.getElementById('ui-incidents-title').innerText = dict.incidentsTitle;
+            }
+            if (document.getElementById('ui-uptime')) {
+                document.getElementById('ui-uptime').innerText = dict.uptimeTitle;
+            }
+            if (document.getElementById('ui-avg-latency')) {
+                document.getElementById('ui-avg-latency').innerText = dict.avgLatency;
+            }
+
+            // Aplicar configuración, menú y footer de nuevo con el idioma correcto
+            applyClientConfig();
+            renderLangMenu();
+            renderProtectedFooter();
+
+            // Si los datos ya se han descargado, recargar los componentes visuales
+            if (latestData) renderData(latestData);
+            if (latestIncidents) renderIncidents();
+            if (latestMaintenances) renderMaintenances();
+
+            // Cerrar menú si está abierto
+            const menu = document.getElementById('langMenu');
+            if (menu) menu.classList.remove('show');
+
+            // Llamada de avisos por limite de webs en versión sin API Key
+            checkApiBanner();
+        }
+
+        // MOTOR DE VERSIONES Y ACTUALIZACIONES
+        let localVersion = { version: "3.1", release_date_es: "11 de agosto de 2026", release_date_en: "August 11, 2026" };
+
+        async function loadVersion() {
+            try { const res = await fetch(`version.json?t=${new Date().getTime()}`); if (res.ok) localVersion = await res.json(); } catch (e) { }
+        }
+
+        function getDynamicText(obj, key) {
+            const loc = key + '_' + currentLang;
+            return (obj[loc] && obj[loc] !== 'null') ? obj[loc] : (obj[key + '_es'] || obj[key] || '--');
+        }
+
+        async function loadConfig() { try { const res = await fetch(`config.json?t=${new Date().getTime()}`); if (res.ok) userConfig = { ...userConfig, ...(await res.json()) }; } catch (e) { } }
+
+        function renderLangMenu() {
+            const langs = userConfig.languages || [{ code: "es", name: "Español", flag: "es" }, { code: "en", name: "English", flag: "gb" }];
+            let menuHtml = ''; let currentIcon = 'https://flagcdn.com/w20/es.png', currentName = 'Español';
+            langs.forEach(l => {
+                menuHtml += `<div class="lang-option" onclick="changeLang('${l.code}')"><img src="https://flagcdn.com/w20/${l.flag}.png" alt="${l.code.toUpperCase()}"> ${l.name}</div>`;
+                if (l.code === currentLang) { currentIcon = `https://flagcdn.com/w20/${l.flag}.png`; currentName = l.name; }
+            });
+            document.getElementById('langMenu').innerHTML = menuHtml;
+            document.getElementById('currentLangIcon').src = currentIcon;
+            document.getElementById('currentLangText').innerText = currentName;
+        }
+
+        function applyClientConfig() {
+            const isEs = currentLang === 'es';
+            document.title = `${userConfig.companyName} | ${isEs ? userConfig.globalTitleES : userConfig.globalTitleEN}`;
+            document.getElementById('clientName').innerText = userConfig.companyName;
+            if (userConfig.companyLogo) { document.getElementById('clientLogo').src = userConfig.companyLogo; document.getElementById('clientLogo').style.display = 'block'; }
+            document.getElementById('clientLink').href = userConfig.returnLinkUrl;
+            document.getElementById('clientLink').innerText = isEs ? userConfig.returnLinkTextES : userConfig.returnLinkTextEN;
+            document.getElementById('ui-global-title').innerText = isEs ? userConfig.globalTitleES : userConfig.globalTitleEN;
+            document.getElementById('ui-global-desc').innerText = isEs ? userConfig.globalDescES : userConfig.globalDescEN;
+        }
+
+        function renderProtectedFooter() {
+            const lastUpdateLabel = currentLang === 'es' ? 'Última actualización de software' : 'Last software update';
+            const formattedDate = currentLang === 'es' ? localVersion.release_date_es : localVersion.release_date_en;
+
+            document.getElementById('secure-footer-container').innerHTML = `<footer><p><span>${dict.footerOpenSource || 'Open source, powered by'}</span> <a href="https://github.com/lasatagameplays/UppWebLa" target="_blank">UppWebLa v${localVersion.version}</a><span id="update-badge"></span> • <span>${lastUpdateLabel}: ${formattedDate}</span></p><p>© 2026 Rubén Castañeda Matute (<a href="https://lasata.eu" target="_blank">LASATA.EU</a>) - <span>${dict.rights}</span></p><a href="https://github.com/lasatagameplays/UppWebLa" target="_blank"><img src="src/images/logoNoChange.png" class="footer-logo"></a></footer>`;
+
+            // 🤖 BUSCADOR AUTOMÁTICO DE ACTUALIZACIONES (OTA)
+            setTimeout(async () => {
+                try {
+                    // Busca la versión en el repositorio maestro de LASATA
+                    const res = await fetch('https://raw.githubusercontent.com/lasatagameplays/UppWebLa/main/version.json?t=' + new Date().getTime());
+                    if (res.ok) {
+                        const remoteVer = await res.json();
+                        const vLocal = localVersion.version.split('.');
+                        const vRemote = remoteVer.version.split('.');
+
+                        // Si la versión del creador es mayor a la del usuario, mostramos la alerta
+                        if (+vRemote[0] > +vLocal[0] || (+vRemote[0] === +vLocal[0] && +vRemote[1] > +vLocal[1])) {
+                            const updateMsg = currentLang === 'es' ? `¡Actualización v${remoteVer.version} disponible!` : `Update v${remoteVer.version} available!`;
+                            const badge = document.getElementById('update-badge');
+                            if (badge) badge.innerHTML = `<a href="https://github.com/lasatagameplays/UppWebLa" target="_blank" style="color: var(--warn-color); margin-left: 10px; font-weight: bold; text-decoration: none; border: 1px solid var(--warn-color); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">🔄 ${updateMsg}</a>`;
+                        }
+                    }
+                } catch (e) { }
+            }, 1500); // Se ejecuta en segundo plano para no ralentizar la web
+        }
+
+        function updateGlobalBanner(components) {
+            const banner = document.getElementById('globalStatusBanner'); const text = document.getElementById('globalStatusText');
+            if (!banner || !text) return;
+            let totalChecks = 0, upChecks = 0, maintChecks = 0;
+            components.forEach(comp => {
+                Object.values(comp.regions || {}).forEach(regData => {
+                    const status = typeof regData === 'string' ? regData : (regData.status || 'UP');
+                    totalChecks++;
+                    if (status === 'UP') upChecks++;
+                    if (status === 'MAINTENANCE') maintChecks++;
+                });
+            });
+            banner.classList.remove('all-up', 'partial', 'all-down');
+            if (totalChecks === 0 || upChecks + maintChecks === totalChecks) { banner.classList.add('all-up'); text.innerText = dict.allOperational; }
+            else if (upChecks === 0 && maintChecks === 0) { banner.classList.add('all-down'); text.innerText = dict.majorOutage; }
+            else { banner.classList.add('partial'); text.innerText = dict.partialOutage; }
+        }
+
+        function renderData(data) {
+            const container = document.getElementById('status-container');
+            if (!container) return;
+            if (!data || !data.components || data.components.length === 0) { container.innerHTML = `<div class="loader">${dict.error}</div>`; return; }
+            container.innerHTML = '';
+
+            const uniqueComponents = []; const seenIds = new Set();
+            data.components.forEach(comp => { const uniqueId = comp.id || comp.name_es || comp.name; if (comp && uniqueId && !seenIds.has(uniqueId)) { seenIds.add(uniqueId); uniqueComponents.push(comp); } });
+            updateGlobalBanner(uniqueComponents);
+
+            uniqueComponents.forEach((comp) => {
+                const checkTime = comp.last_check || data.last_check;
+                const formattedDate = checkTime ? new Intl.DateTimeFormat(currentLang === 'es' ? 'es-ES' : 'en-US', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(checkTime)) : '--';
+                const compName = getDynamicText(comp, 'name');
+                const safeId = comp.id || comp.name_es || comp.name;
+
+                let regionsHtml = '';
+                const regionFlags = { "US": "🌎", "EU": "🌍", "ASIA": "🌏" };
+
+                let upChecks = 0;
+                let totalChecks = 0;
+
+                Object.entries(comp.regions || {}).forEach(([regKey, regData]) => {
+                    const status = typeof regData === 'string' ? regData : (regData.status || 'UP');
+                    const latency = typeof regData === 'object' && regData.latency !== undefined ? regData.latency : 0;
+
+                    const isUp = status === 'UP' || status === 'MAINTENANCE';
+                    let badgeStatus = isUp ? 'status-up' : 'status-down';
+                    let badgeText = isUp ? dict.up : dict.down;
+                    if (status === 'MAINTENANCE') { badgeStatus = 'status-maint'; badgeText = '⚙️'; }
+
+                    totalChecks++;
+                    if (isUp) upChecks++;
+
+                    regionsHtml += `<div class="region-box" onclick="openChart('${safeId}', '${regKey}')" title="${dict.clickForGraph}"><span class="region-flag">${regionFlags[regKey] || '🌐'}</span><span class="region-name">${(dict.regions && dict.regions[regKey]) ? dict.regions[regKey] : regKey}</span><span class="status-badge ${badgeStatus}">${badgeText}</span><span class="region-latency">⚡ ${latency} ${dict.ms}</span></div>`;
+                });
+
+                let tagHtml = '';
+                let isMaint = false;
+
+                // ⚙️ TAREAS PROGRAMADAS (NUEVO V2.9)
+                if (comp.active_task) {
+                    let taskText = getDynamicText(comp.active_task, 'desc');
+                    if (taskText === '--' || !taskText) taskText = dict.scheduledTaskDefault || 'Tarea programada';
+                    tagHtml = `<span class="status-badge" style="background: var(--maint-bg); color: var(--maint-blue); border: 1px solid rgba(31, 111, 235, 0.4); margin-left: 10px; cursor: default;">⚙️ ${taskText}</span>`;
+                    isMaint = true;
+                }
+
+                if (!isMaint && latestMaintenances) {
+                    const activeMaint = latestMaintenances.find(m =>
+                        (m.service && (m.service.includes(comp.name_es) || m.service.includes(comp.name_en) || m.service.includes(comp.id))) &&
+                        (m.status === 'in_progress' || m.status === 'scheduled')
+                    );
+                    if (activeMaint) {
+                        isMaint = true;
+                        if (activeMaint.status === 'in_progress') {
+                            tagHtml = `<span class="status-badge" style="background: var(--maint-bg); color: var(--maint-blue); border: 1px solid rgba(31, 111, 235, 0.4); margin-left: 10px; cursor: default;">⚙️ ${dict.maintInProgressTag}</span>`;
+                        } else {
+                            tagHtml = `<span class="status-badge" style="background: rgba(139, 148, 158, 0.15); color: var(--text-muted); border: 1px solid var(--border-color); margin-left: 10px; cursor: default;">📅 ${dict.maintScheduledTag}</span>`;
+                        }
+                    }
+                }
+
+                if (!isMaint) {
+                    if (totalChecks > 0 && upChecks === 0) {
+                        tagHtml = `<span class="status-badge" style="background: rgba(248, 81, 73, 0.15); color: var(--down-color); border: 1px solid rgba(248, 81, 73, 0.4); margin-left: 10px; cursor: default;">🔴 ${dict.majorOutageTag}</span>`;
+                    } else if (totalChecks > 0 && upChecks < totalChecks) {
+                        tagHtml = `<span class="status-badge" style="background: rgba(210, 153, 34, 0.15); color: var(--warn-color); border: 1px solid rgba(210, 153, 34, 0.4); margin-left: 10px; cursor: default;">⚠️ ${dict.partialOutageTag}</span>`;
+                    } else {
+                        tagHtml = `<span class="status-badge" style="background: rgba(46, 160, 67, 0.15); color: var(--up-color); border: 1px solid rgba(46, 160, 67, 0.4); margin-left: 10px; cursor: default;">✅ ${dict.operationalTag}</span>`;
+                    }
+                }
+
+                container.insertAdjacentHTML('beforeend', `
+                            <div class="component">
+                                <div class="component-header">
+                                    <div style="display:flex; align-items:center; flex-wrap:wrap;">
+                                        <a href="${comp.url}" target="_blank" class="component-name" style="margin-right: 0;">${compName} ${externalLinkIcon}</a>
+                                        ${tagHtml}
+                                    </div>
+                                    <span class="component-time">${dict.lastCheck} ${formattedDate}</span>
+                                </div>
+                                <div class="regions-grid">${regionsHtml}</div>
+                            </div>`);
+            });
+        }
+
+        function renderIncidents() {
+            const container = document.getElementById('incidents-container');
+            if (!container) return; container.innerHTML = '';
+            if (!latestIncidents || latestIncidents.length === 0) { container.innerHTML = `<p class="no-incidents">${dict.noIncidents}</p>`; return; }
+
+            const start = (currentIncidentPage - 1) * itemsPerPage;
+            const paginated = latestIncidents.slice(start, start + itemsPerPage);
+
+            paginated.forEach(inc => {
+                const formattedDate = new Intl.DateTimeFormat(currentLang === 'es' ? 'es-ES' : 'en-US', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(inc.start_time));
+                const isActive = inc.status === 'active';
+                const titleText = getDynamicText(inc, 'title');
+                const descText = getDynamicText(inc, 'description');
+
+                let badgeText = dict.incidentResolved;
+                if (isActive) badgeText = dict.incidentActive;
+                if (inc.status === 'resolved_manual') badgeText = dict.statusResolvedManual;
+                if (inc.status === 'resolved_auto') badgeText = dict.statusResolvedAuto;
+
+                container.insertAdjacentHTML('beforeend', `<div class="incident-card ${isActive ? 'active' : 'resolved'}" onclick="window.location.href='incident.html?id=${inc.id}'" style="cursor:pointer;"><div class="incident-header"><span class="incident-title-text">${titleText}</span><span class="incident-badge ${isActive ? 'badge-active' : 'badge-resolved'}">${badgeText}</span></div><div class="incident-date">🕒 ${formattedDate} - ${inc.service}</div><p class="incident-desc">${descText.substring(0, 140)}...</p><div style="margin-top: 10px; font-size: 0.85rem; color: var(--accent-blue); font-weight: bold;">${dict.viewDetails} ➔</div></div>`);
+            });
+
+            if (latestIncidents.length > itemsPerPage) {
+                const totalPages = Math.ceil(latestIncidents.length / itemsPerPage);
+                container.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:center; gap: 1rem; margin-top: 1.5rem; align-items:center;"><button class="lang-btn" style="padding:0.4rem 0.8rem;" ${currentIncidentPage === 1 ? 'disabled style="opacity:0.5;"' : ''} onclick="currentIncidentPage--; renderIncidents()">◀ ${dict.prevPage}</button><span style="font-size:0.9rem; color:var(--text-muted); font-weight:bold;">${dict.page} ${currentIncidentPage} / ${totalPages}</span><button class="lang-btn" style="padding:0.4rem 0.8rem;" ${currentIncidentPage === totalPages ? 'disabled style="opacity:0.5;"' : ''} onclick="currentIncidentPage++; renderIncidents()">${dict.nextPage} ▶</button></div>`);
+            }
+        }
+
+        function renderMaintenances() {
+            const container = document.getElementById('maintenances-container');
+            if (!container) return; container.innerHTML = '';
+            if (!latestMaintenances || latestMaintenances.length === 0) { container.innerHTML = `<p class="no-incidents">${dict.noMaintenances}</p>`; return; }
+
+            const start = (currentMaintenancePage - 1) * itemsPerPage;
+            const paginated = latestMaintenances.slice(start, start + itemsPerPage);
+
+            paginated.forEach(maint => {
+                const formattedDate = new Intl.DateTimeFormat(currentLang === 'es' ? 'es-ES' : 'en-US', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(maint.start_time));
+                const titleText = getDynamicText(maint, 'title');
+                const descText = getDynamicText(maint, 'description');
+
+                let badgeClass = 'resolved'; let badgeLabel = dict.maintCompleted;
+                if (maint.status === 'scheduled') { badgeClass = 'scheduled'; badgeLabel = dict.maintScheduled; }
+                else if (maint.status === 'in_progress') { badgeClass = 'in_progress'; badgeLabel = dict.maintInProgress; }
+
+                container.insertAdjacentHTML('beforeend', `<div class="incident-card ${badgeClass}" onclick="window.location.href='maintenance.html?id=${maint.id}'" style="cursor:pointer;"><div class="incident-header"><span class="incident-title-text">${titleText}</span><span class="incident-badge ${badgeClass === 'scheduled' ? 'badge-scheduled' : (badgeClass === 'in_progress' ? 'badge-active' : 'badge-resolved')}">${badgeLabel}</span></div><div class="incident-date">🕒 ${formattedDate} - ${maint.service}</div><p class="incident-desc">${descText.substring(0, 140)}...</p><div style="margin-top: 10px; font-size: 0.85rem; color: var(--accent-blue); font-weight: bold;">${dict.viewDetails} ➔</div></div>`);
+            });
+
+            if (latestMaintenances.length > itemsPerPage) {
+                const totalPages = Math.ceil(latestMaintenances.length / itemsPerPage);
+                container.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:center; gap: 1rem; margin-top: 1.5rem; align-items:center;"><button class="lang-btn" style="padding:0.4rem 0.8rem;" ${currentMaintenancePage === 1 ? 'disabled style="opacity:0.5;"' : ''} onclick="currentMaintenancePage--; renderMaintenances()">◀ ${dict.prevPage}</button><span style="font-size:0.9rem; color:var(--text-muted); font-weight:bold;">${dict.page} ${currentMaintenancePage} / ${totalPages}</span><button class="lang-btn" style="padding:0.4rem 0.8rem;" ${currentMaintenancePage === totalPages ? 'disabled style="opacity:0.5;"' : ''} onclick="currentMaintenancePage++; renderMaintenances()">${dict.nextPage} ▶</button></div>`);
+            }
+        }
+
+        function renderTimeButtons() {
+            const container = document.getElementById('time-filters-container');
+            if (!container) return;
+            let html = `
+                        <button class="time-btn" onclick="filterChart('1h', this)">1h</button>
+                        <button class="time-btn" onclick="filterChart('6h', this)">6h</button>
+                        <button class="time-btn" onclick="filterChart('12h', this)">12h</button>
+                        <button class="time-btn" onclick="filterChart('18h', this)">18h</button>
+                        <button class="time-btn active" id="btn-24h" onclick="filterChart('24h', this)">24h</button>
+                        <button class="time-btn" onclick="filterChart('7d', this)">7d</button>
+                        <button class="time-btn" onclick="filterChart('1m', this)">1m</button>
+                        <button class="time-btn" onclick="filterChart('6m', this)">6m</button>
+                        <button class="time-btn" onclick="filterChart('1y', this)">1y</button>
+                    `;
+            const ret = parseInt(userConfig.retentionYears) || 1;
+            if (ret >= 5) html += `<button class="time-btn" onclick="filterChart('5y', this)">5y</button>`;
+            if (ret >= 10) html += `<button class="time-btn" onclick="filterChart('10y', this)">10y</button>`;
+            if (ret >= 25) html += `<button class="time-btn" onclick="filterChart('25y', this)">25y</button>`;
+            if (ret >= 50) html += `<button class="time-btn" onclick="filterChart('50y', this)">50y</button>`;
+            if (ret >= 100) html += `<button class="time-btn" onclick="filterChart('100y', this)">100y</button>`;
+            if (ret >= 150) html += `<button class="time-btn" onclick="filterChart('150y', this)">150y</button>`;
+            html += `<button class="time-btn" onclick="filterChart('all', this)">${dict.allTime || 'Todo'}</button>`;
+            container.innerHTML = html;
+        }
+
+        async function openChart(compId, regKey) {
+            if (!latestData || !latestData.components) return;
+            const comp = latestData.components.find(c => c.id === compId || c.name_es === compId || c.name === compId);
+            if (!comp) return;
+
+            document.getElementById('modalCompTitle').innerText = `Cargando...`;
+            document.getElementById('chartModal').style.display = 'flex';
+
+            let history = [], summary = [];
+            try {
+                if (comp.history_file) {
+                    const res = await fetch(`${comp.history_file}?t=${new Date().getTime()}`);
+                    if (res.ok) history = await res.json();
+                }
+            } catch (err) { }
+            try {
+                if (comp.history_file) {
+                    const summaryFile = comp.history_file.replace('.json', '_summary.json');
+                    const resSum = await fetch(`${summaryFile}?t=${new Date().getTime()}`);
+                    if (resSum.ok) summary = await resSum.json();
+                }
+            } catch (err) { }
+
+            activeHistoryFull = history;
+            activeSummaryFull = summary;
+            activeRegKey = regKey;
+
+            const compName = getDynamicText(comp, 'name');
+            document.getElementById('modalCompTitle').innerText = `${compName} - ${(dict.regions && dict.regions[regKey]) ? dict.regions[regKey] : regKey}`;
+
+            renderTimeButtons();
+            filterChart('24h', document.getElementById('btn-24h'));
+        }
+
+        function filterChart(range, btnElement) {
+            if (!btnElement) btnElement = document.getElementById('btn-24h');
+            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            const now = new Date().getTime();
+            let cutoffTime = 0;
+            let datasetToUse = activeHistoryFull;
+            let isMonthly = false;
+
+            if (range === '1h') cutoffTime = now - (1 * 3600 * 1000);
+            else if (range === '6h') cutoffTime = now - (6 * 3600 * 1000);
+            else if (range === '12h') cutoffTime = now - (12 * 3600 * 1000);
+            else if (range === '18h') cutoffTime = now - (18 * 3600 * 1000);
+            else if (range === '24h') cutoffTime = now - (24 * 3600 * 1000);
+            else if (range === '7d') cutoffTime = now - (7 * 24 * 3600 * 1000);
+            else if (range === '1m') cutoffTime = now - (30 * 24 * 3600 * 1000);
+            else if (range === '6m') cutoffTime = now - (182 * 24 * 3600 * 1000);
+            else if (range === '1y') cutoffTime = now - (365 * 24 * 3600 * 1000);
+            else {
+                if (activeSummaryFull && activeSummaryFull.length > 0) {
+                    datasetToUse = activeSummaryFull;
+                    isMonthly = true;
+                }
+                if (range === '5y') cutoffTime = now - (5 * 365 * 24 * 3600 * 1000);
+                else if (range === '10y') cutoffTime = now - (10 * 365 * 24 * 3600 * 1000);
+                else if (range === '25y') cutoffTime = now - (25 * 365 * 24 * 3600 * 1000);
+                else if (range === '50y') cutoffTime = now - (50 * 365 * 24 * 3600 * 1000);
+                else if (range === '100y') cutoffTime = now - (100 * 365 * 24 * 3600 * 1000);
+                else if (range === '150y') cutoffTime = now - (150 * 365 * 24 * 3600 * 1000);
+                else if (range === 'all') cutoffTime = 0;
+            }
+
+            const filtered = datasetToUse.filter(entry => new Date(entry.timestamp).getTime() >= cutoffTime);
+
+            let upCount = 0, latCount = 0, totalLat = 0;
+            filtered.forEach(entry => {
+                const r = entry[activeRegKey];
+                const s = typeof r === 'string' ? r : (r && r.status ? r.status : 'DOWN');
+                const l = typeof r === 'object' && r.latency ? r.latency : 0;
+                if (s === 'UP' || s === 'MAINTENANCE') upCount++;
+                if (l > 0) { latCount++; totalLat += l; }
+            });
+
+            document.getElementById('modalUptime').innerText = `${filtered.length > 0 ? ((upCount / filtered.length) * 100).toFixed(4) : "100.0000"}%`;
+            document.getElementById('modalAvgLatency').innerText = `${latCount > 0 ? Math.round(totalLat / latCount) : 0} ${dict.ms}`;
+
+            let downsampled = filtered;
+            if (filtered.length > 150) {
+                const step = Math.ceil(filtered.length / 150);
+                downsampled = filtered.filter((_, idx) => idx % step === 0 || idx === filtered.length - 1);
+            }
+
+            const labels = downsampled.map(e => {
+                const d = new Date(e.timestamp);
+                const loc = currentLang === 'es' ? 'es-ES' : 'en-US';
+                if (isMonthly) return d.toLocaleString(loc, { month: 'short', year: 'numeric' });
+                return d.toLocaleString(loc, { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            });
+
+            const latencies = downsampled.map(e => typeof e[activeRegKey] === 'object' && e[activeRegKey].latency ? e[activeRegKey].latency : 0);
+
+            if (myChart) myChart.destroy();
+            myChart = new Chart(document.getElementById('latencyChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${dict.chartTitle || 'Latencia'} (${dict.ms})`,
+                        data: latencies,
+                        borderColor: '#58a6ff',
+                        backgroundColor: 'rgba(88, 166, 255, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: filtered.length > 50 ? 1 : 4,
+                        pointBackgroundColor: '#58a6ff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#c9d1d9' } } },
+                    scales: {
+                        x: { ticks: { color: '#8b949e', maxTicksLimit: 10 }, grid: { color: '#30363d' } },
+                        y: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' }, beginAtZero: true }
+                    },
+                    animation: { duration: 400 }
+                }
+            });
+        }
+
+        function closeModal(e) { document.getElementById('chartModal').style.display = 'none'; }
+
+        function updateTimer() {
+            if (!nextCheckTime) return;
+            const timerEl = document.getElementById('ui-timer');
+            if (!timerEl) return;
+            const now = new Date().getTime();
+            const diff = nextCheckTime - now;
+
+            if (diff > 0) {
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                timerEl.innerHTML = `⏳ ${dict.nextUpdate} <b>${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}</b>`;
+            } else {
+                const overdue = Math.abs(diff);
+                const m = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((overdue % (1000 * 60)) / 1000);
+                timerEl.innerHTML = `🔄 <b>${dict.updating}</b> <span style="font-size: 0.85em; opacity: 0.8;">(${dict.delayText || 'Retraso:'} +${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')})</span>`;
+                if (overdue % 15000 < 1000 && !isFetching) fetchAllData();
+            }
+        }
+
+        async function fetchAllData() {
+            if (isFetching) return;
+            isFetching = true;
+            try { const resStatus = await fetch(`data.json?t=${new Date().getTime()}`); if (resStatus.ok) latestData = await resStatus.json(); } catch (e) { }
+            try { const resInc = await fetch(`incidents-index.json?t=${new Date().getTime()}`); if (resInc.ok) latestIncidents = await resInc.json(); } catch (e) { }
+            try { const resMaint = await fetch(`maintenances-index.json?t=${new Date().getTime()}`); if (resMaint.ok) latestMaintenances = await resMaint.json(); } catch (e) { }
+
+            if (latestData) {
+                renderData(latestData);
+                if (latestData.last_check) {
+                    const lastCheckDate = new Date(latestData.last_check);
+                    const m = lastCheckDate.getMinutes();
+                    const cronTriggerMinute = Math.floor(m / 5) * 5;
+                    const nextReadyDate = new Date(lastCheckDate);
+                    nextReadyDate.setMinutes(cronTriggerMinute + 6, 0, 0);
+                    nextCheckTime = nextReadyDate.getTime();
+                }
+            }
+            renderIncidents();
+            renderMaintenances();
+            isFetching = false;
+        }
+
+        async function init() {
+            await loadVersion();
+            await loadConfig();
+            await changeLang(currentLang);
+            if (!document.getElementById('ui-timer')) {
+                const header = document.querySelector('.header');
+                if (header) header.insertAdjacentHTML('beforeend', '<div id="ui-timer" style="margin-top: 15px; font-size: 0.95rem; color: var(--accent-blue); font-weight: 400; background: rgba(88, 166, 255, 0.1); padding: 6px 16px; border-radius: 20px; display: inline-block; border: 1px solid rgba(88, 166, 255, 0.3);"></div>');
+            }
+            await fetchAllData();
+            setInterval(updateTimer, 1000);
+        }
+        init();
+    </script>
+</body>
+</html>

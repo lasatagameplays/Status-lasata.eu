@@ -1,0 +1,635 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UppWebLa | Detalles de Mantenimiento</title>
+    <link rel="icon" type="image/png" href="src/images/iconoNoChange.png">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --up-color: #2ea043;
+            --warn-color: #d29922;
+            --border-color: #30363d;
+            --accent-blue: #58a6ff;
+            --maint-blue: #1f6feb;
+            --maint-bg: rgba(31, 111, 235, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .client-nav {
+            width: 100%;
+            background-color: #010409;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            box-sizing: border-box;
+        }
+
+        .client-nav-inner {
+            width: 100%;
+            max-width: 1050px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .client-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .client-logo {
+            height: 28px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .client-return-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+            .client-return-link:hover {
+                text-decoration: underline;
+                color: #79c0ff;
+            }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+            flex: 1;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+            .back-btn:hover {
+                background: #21262d;
+                border-color: var(--text-main);
+            }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .lang-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .lang-btn img {
+                width: 20px;
+                border-radius: 2px;
+            }
+
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: none;
+            flex-direction: column;
+            min-width: 140px;
+            z-index: 10;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+            .lang-menu.show {
+                display: flex;
+            }
+
+        .lang-option {
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+            .lang-option:hover {
+                background: #21262d;
+                color: var(--accent-blue);
+            }
+
+        .incident-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .incident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .incident-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            color: #fff;
+        }
+
+        .incident-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-scheduled {
+            background: var(--maint-bg);
+            color: var(--maint-blue);
+            border: 1px solid rgba(31, 111, 235, 0.4);
+        }
+
+        .badge-active {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--warn-color);
+            border: 1px solid rgba(210, 153, 34, 0.4);
+        }
+
+        .badge-resolved {
+            background: rgba(46, 160, 67, 0.15);
+            color: var(--up-color);
+            border: 1px solid rgba(46, 160, 67, 0.4);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-block {
+            background: #0d1117;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .desc-box {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        /* TIMELINE (CRONOLOGÍA) */
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--border-color);
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -1.95rem;
+                top: 0.3rem;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: var(--maint-blue);
+                box-shadow: 0 0 0 4px var(--card-bg);
+            }
+
+        .timeline-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            background: #0d1117;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            padding-bottom: 2rem;
+        }
+
+        .footer-logo {
+            width: 400px;
+            max-width: 80%;
+            margin: 15px auto;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a.custom-footer-link {
+            color: #ffffff;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        footer a.custom-footer-link:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .client-nav-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="client-nav">
+        <div class="client-nav-inner">
+            <div class="client-brand">
+                <img id="clientLogo" class="client-logo" src="" alt="Logo">
+                <span id="clientName">Empresa</span>
+            </div>
+            <a id="clientLink" href="#" target="_blank" class="client-return-link">Volver a la web</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="top-bar">
+            <a href="index.html" class="back-btn" id="ui-back-btn">← Volver al Dashboard</a>
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-btn" onclick="toggleLangMenu()">
+                    <img id="currentLangIcon" src="https://flagcdn.com/w20/es.png" alt="ES">
+                    <span id="currentLangText">Español</span> <span style="font-size: 0.7rem;">▼</span>
+                </div>
+                <div class="lang-menu" id="langMenu">
+                    <div class="lang-option" onclick="changeLang('es')"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</div>
+                    <div class="lang-option" onclick="changeLang('en')"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header"></div>
+
+        <div id="maint-content" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+            Cargando detalles del mantenimiento...
+        </div>
+    </div>
+
+    <div id="secure-footer-container"></div>
+
+    <script>
+        let userConfig = { companyName: "LASATA", companyLogo: "", returnLinkTextES: "Volver", returnLinkTextEN: "Return", returnLinkUrl: "#", languages: [{ "code": "es", "name": "Español", "flag": "es" }, { "code": "en", "name": "English", "flag": "gb" }] };
+
+
+        const fallbackDicts = {
+            es: { title: "🔧 Detalles de Mantenimiento", loading: "Comprobando...", error: "Error de lectura.", up: "En línea", down: "Caído", lastCheck: "Última comprobación: ", uptimeTitle: "Disponibilidad", avgLatency: "Latencia media", incidentsTitle: "📢 Reportes e Incidencias", noIncidents: "No hay incidencias reportadas.", maintenancesTitle: "🔧 Mantenimientos Programados", noMaintenances: "No hay mantenimientos programados.", ms: "ms", rights: "Todos los derechos reservados.", allOperational: "✅ Todos los sistemas operativos", partialOutage: "⚠️ Interrupción parcial", majorOutage: "🔴 Sistemas caídos", viewDetails: "Ver detalles completos", prevPage: "Anterior", nextPage: "Siguiente", page: "Página", incidentActive: "Incidencia Activa", incidentResolved: "Resuelto", statusResolvedManual: "Resuelto (Manual)", statusResolvedAuto: "Resuelto (Automático)", maintScheduled: "Programado", maintInProgress: "En Proceso", maintCompleted: "Completado", regions: { "US": "América", "EU": "Europa", "ASIA": "Asia" }, majorOutageTag: "Caída Completa", partialOutageTag: "Caída Parcial", operationalTag: "Operativo", maintInProgressTag: "En Mantenimiento", maintScheduledTag: "Mantenimiento Programado", nextUpdate: "Próxima actualización est. en:", updating: "Obteniendo datos de GitHub...", delayText: "Retraso en cola:", allTime: "Todo", scheduledTaskDefault: "Tarea Programada" },
+            en: { title: "🔧 Maintenance Details", loading: "Checking...", error: "Read error.", up: "Online", down: "Offline", lastCheck: "Last check: ", uptimeTitle: "Uptime", avgLatency: "Average latency", incidentsTitle: "📢 Incident Reports", noIncidents: "No incidents reported.", maintenancesTitle: "🔧 Scheduled Maintenances", noMaintenances: "No scheduled maintenances.", ms: "ms", rights: "All rights reserved.", allOperational: "✅ All systems operational", partialOutage: "⚠️ Partial outage", majorOutage: "🔴 Major outage", viewDetails: "View full details", prevPage: "Previous", nextPage: "Next", page: "Page", incidentActive: "Active Incident", incidentResolved: "Resolved", statusResolvedManual: "Resolved (Manual)", statusResolvedAuto: "Resolved (Auto)", maintScheduled: "Scheduled", maintInProgress: "In Progress", maintCompleted: "Completed", regions: { "US": "America", "EU": "Europe", "ASIA": "Asia" }, majorOutageTag: "Complete Outage", partialOutageTag: "Partial Outage", operationalTag: "Operational", maintInProgressTag: "Under Maintenance", maintScheduledTag: "Scheduled Maintenance", nextUpdate: "Estimated next update in:", updating: "Fetching data from GitHub...", delayText: "Queue delay:", allTime: "All", scheduledTaskDefault: "Scheduled Task" }
+        };
+
+        let currentLang = localStorage.getItem('uppwebla_lang') || (navigator.language.startsWith('es') ? 'es' : 'en');
+        let dict = { ...(fallbackDicts[currentLang] || fallbackDicts['es']) };
+        let currentMaint = null;
+        let localVersion = { version: "3.1", release_date_es: "11 de agosto de 2026", release_date_en: "August 11, 2026" };
+
+        function getDynamicText(obj, key) {
+            const loc = key + '_' + currentLang;
+            return (obj[loc] && obj[loc] !== 'null') ? obj[loc] : (obj[key + '_es'] || obj[key] || '--');
+        }
+
+        async function loadConfig() { try { const res = await fetch(`config.json?t=${new Date().getTime()}`); if (res.ok) userConfig = { ...userConfig, ...(await res.json()) }; } catch (e) { } }
+        async function loadVersion() { try { const res = await fetch(`version.json?t=${new Date().getTime()}`); if (res.ok) localVersion = await res.json(); } catch (e) { } }
+
+        function renderLangMenu() {
+            const langs = userConfig.languages || [{ code: "es", name: "Español", flag: "es" }, { code: "en", name: "English", flag: "gb" }];
+            let menuHtml = ''; let currentIcon = 'https://flagcdn.com/w20/es.png', currentName = 'Español';
+            langs.forEach(l => {
+                menuHtml += `<div class="lang-option" onclick="changeLang('${l.code}')"><img src="https://flagcdn.com/w20/${l.flag}.png" alt="${l.code.toUpperCase()}"> ${l.name}</div>`;
+                if (l.code === currentLang) { currentIcon = `https://flagcdn.com/w20/${l.flag}.png`; currentName = l.name; }
+            });
+            document.getElementById('langMenu').innerHTML = menuHtml;
+            document.getElementById('currentLangIcon').src = currentIcon;
+            document.getElementById('currentLangText').innerText = currentName;
+        }
+
+        function applyClientConfig() {
+            document.title = `${userConfig.companyName} | ${dict.title}`;
+            document.getElementById('clientName').innerText = userConfig.companyName;
+            if (userConfig.companyLogo) { document.getElementById('clientLogo').src = userConfig.companyLogo; document.getElementById('clientLogo').style.display = 'block'; }
+            document.getElementById('clientLink').href = userConfig.returnLinkUrl;
+            document.getElementById('clientLink').innerText = currentLang === 'es' ? userConfig.returnLinkTextES : userConfig.returnLinkTextEN;
+            document.getElementById('ui-back-btn').innerText = dict.backToHome;
+            if (document.getElementById('ui-back-btn')) {
+                document.getElementById('ui-back-btn').innerText = dict.backToHome || "← Volver al Dashboard";
+            }
+        }
+
+        function renderProtectedFooter() {
+            const lastUpdateLabel = currentLang === 'es' ? 'Última actualización de software' : 'Last software update';
+            const formattedDate = currentLang === 'es' ? localVersion.release_date_es : localVersion.release_date_en;
+
+            document.getElementById('secure-footer-container').innerHTML = `<footer><p><span>${dict.footerOpenSource || 'Open source, powered by'}</span> <a href="https://github.com/lasatagameplays/UppWebLa" target="_blank" class="custom-footer-link">UppWebLa v${localVersion.version}</a><span id="update-badge"></span> • <span>${lastUpdateLabel}: ${formattedDate}</span></p><p>© 2026 Rubén Castañeda Matute (<a href="https://lasata.eu" target="_blank" class="custom-footer-link">LASATA.EU</a>) - <span>${dict.rights}</span></p><a href="https://github.com/lasatagameplays/UppWebLa" target="_blank"><img src="src/images/logoNoChange.png" class="footer-logo"></a></footer>`;
+
+            // 🤖 BUSCADOR AUTOMÁTICO DE ACTUALIZACIONES (OTA)
+            setTimeout(async () => {
+                try {
+                    // Busca la versión en el repositorio maestro de LASATA
+                    const res = await fetch('https://raw.githubusercontent.com/lasatagameplays/UppWebLa/main/version.json?t=' + new Date().getTime());
+                    if (res.ok) {
+                        const remoteVer = await res.json();
+                        const vLocal = localVersion.version.split('.');
+                        const vRemote = remoteVer.version.split('.');
+
+                        // Si la versión del creador es mayor a la del usuario, mostramos la alerta
+                        if (+vRemote[0] > +vLocal[0] || (+vRemote[0] === +vLocal[0] && +vRemote[1] > +vLocal[1])) {
+                            const updateMsg = currentLang === 'es' ? `¡Actualización v${remoteVer.version} disponible!` : `Update v${remoteVer.version} available!`;
+                            const badge = document.getElementById('update-badge');
+                            if (badge) badge.innerHTML = `<a href="https://github.com/lasatagameplays/UppWebLa" target="_blank" style="color: var(--warn-color); margin-left: 10px; font-weight: bold; text-decoration: none; border: 1px solid var(--warn-color); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">🔄 ${updateMsg}</a>`;
+                        }
+                    }
+                } catch (e) { }
+            }, 1500); // Se ejecuta en segundo plano para no ralentizar la web
+        }
+
+        function toggleLangMenu() { document.getElementById('langMenu').classList.toggle('show'); }
+
+        document.addEventListener('click', e => {
+            if (!document.getElementById('langDropdown').contains(e.target))
+                document.getElementById('langMenu').classList.remove('show');
+        });
+
+        async function checkApiBanner() {
+            try {
+                const res = await fetch(`data.json?t=${new Date().getTime()}`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data.api_info || data.api_info.status === 'ok') {
+                    const el = document.getElementById('api-warning-banner');
+                    if (el) el.remove();
+                    return;
+                }
+
+                const info = data.api_info;
+                let color = info.status === 'blocked' ? '#f85149' : '#d29922';
+                let bg = info.status === 'blocked' ? 'rgba(248, 81, 73, 0.1)' : 'rgba(210, 153, 34, 0.1)';
+                let icon = info.status === 'blocked' ? '🚨' : '⚠️';
+
+                // Lee el texto del diccionario de idiomas dinámico (es.json o en.json)
+                let textRaw = info.status === 'blocked'
+                    ? (dict.apiWarningBlocked || `<b>Monitorización detenida:</b> Tienes {count} webs. Añade GLOBALPING_API_KEY.`)
+                    : (dict.apiWarningRecommendation || `<b>Recomendación:</b> Modo anónimo ({count}/{limit} webs). Añade GLOBALPING_API_KEY.`);
+
+                // Inyecta los números reales
+                let text = textRaw.replace('{count}', info.count).replace('{limit}', info.limit);
+
+                const header = document.querySelector('.header');
+                if (header && !document.getElementById('api-warning-banner')) {
+                    header.insertAdjacentHTML('afterend', `<div id="api-warning-banner" style="background-color: ${bg}; border: 1px solid ${color}; color: ${color}; padding: 12px 20px; margin: 15px auto; border-radius: 8px; max-width: 800px; text-align: center; font-size: 0.95rem; line-height: 1.5;">${icon} ${text}</div>`);
+                } else if (document.getElementById('api-warning-banner')) {
+                    document.getElementById('api-warning-banner').innerHTML = `${icon} ${text}`;
+                }
+            } catch (e) { }
+        }
+
+        async function changeLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('uppwebla_lang', lang);
+            renderLangMenu();
+            document.getElementById('langMenu').classList.remove('show');
+
+            // Diccionario base de respaldo
+            dict = { ...(fallbackDicts[currentLang] || fallbackDicts['es']) };
+
+            // Carga dinámica desde la carpeta lang/
+            try {
+                const res = await fetch(`lang/${lang}.json?t=${new Date().getTime()}`);
+                if (res.ok) {
+                    const externalDict = await res.json();
+                    dict = { ...dict, ...externalDict };
+                }
+            } catch (e) { }
+
+            applyClientConfig();
+            renderProtectedFooter();
+            document.documentElement.lang = currentLang;
+
+            // Recargar vista según corresponda (en incident.html o maintenance.html)
+            if (typeof currentIncident !== 'undefined' && currentIncident) renderIncident(currentIncident);
+            if (typeof currentMaint !== 'undefined' && currentMaint) renderMaint(currentMaint);
+
+            // Llamada de avisos por limite de webs en versión sin API Key
+            checkApiBanner();
+        }
+
+        async function checkRemoteVersion() {
+            setTimeout(async () => {
+                try {
+                    const res = await fetch('https://raw.githubusercontent.com/lasatagameplays/UppWebLa/main/version.json?t=' + new Date().getTime());
+                    if (res.ok) {
+                        const remoteVer = await res.json();
+                        const vLocal = localVersion.version.split('.');
+                        const vRemote = remoteVer.version.split('.');
+
+                        if (+vRemote[0] > +vLocal[0] || (+vRemote[0] === +vLocal[0] && +vRemote[1] > +vLocal[1])) {
+                            const updateMsg = currentLang === 'es' ? `¡Actualización v${remoteVer.version} disponible!` : `Update v${remoteVer.version} available!`;
+                            const badge = document.getElementById('update-badge');
+                            if (badge) badge.innerHTML = `<a href="https://github.com/lasatagameplays/UppWebLa" target="_blank" style="color: var(--warn-color); margin-left: 10px; font-weight: bold; text-decoration: none; border: 1px solid var(--warn-color); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">🔄 ${updateMsg}</a>`;
+                        }
+                    }
+                } catch (e) { }
+            }, 1500);
+        }
+
+        function renderMaint(maint) {
+            const container = document.getElementById('maint-content');
+            const locale = currentLang === 'es' ? 'es-ES' : 'en-US';
+
+            let badgeClass = 'badge-scheduled';
+            let badgeLabel = dict.maintScheduled;
+            if (maint.status === 'in_progress') {
+                badgeClass = 'badge-active';
+                badgeLabel = dict.maintInProgress;
+            }
+            else if (maint.status === 'completed') {
+                badgeClass = 'badge-resolved';
+                badgeLabel = dict.maintCompleted;
+            }
+
+            const formatD = (ds) => ds ? new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeStyle: 'short' }).format(new Date(ds)) : (currentLang === 'es' ? 'Sin fecha de fin fija' : 'No end date set');
+
+            const titleText = getDynamicText(maint, 'title');
+            const descText = getDynamicText(maint, 'description');
+
+            let html = `<div class="incident-card" style="text-align: left;">
+                <div class="incident-header">
+                    <h1 class="incident-title">${titleText}</h1>
+                    <span class="incident-badge ${badgeClass}">${badgeLabel}</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-block">
+                        <div class="info-label">${dict.serviceAffected}</div>
+                        <div class="info-value" style="color:var(--maint-blue);">${maint.service || '--'}</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">ID</div>
+                        <div class="info-value">#${maint.id}</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">${dict.startedAt}</div>
+                        <div class="info-value">${formatD(maint.start_time)}</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">${dict.endedAt}</div>
+                        <div class="info-value">${formatD(maint.end_time)}</div>
+                    </div>
+                </div>
+                <div class="desc-box">${descText}</div>
+                <h2 class="timeline-title">${dict.timelineTitle}</h2>
+                <div class="timeline">`;
+
+            if (maint.updates && maint.updates.length > 0) {
+                const sortedUpdates = [...maint.updates].sort((a, b) => new Date(b.time) - new Date(a.time));
+                sortedUpdates.forEach(upd => {
+                    const updText = getDynamicText(upd, 'text');
+                    html += `<div class="timeline-item"><div class="timeline-time">${formatD(upd.time)}</div><div class="timeline-text">${updText}</div></div>`;
+                });
+            } else {
+                html += `<div class="timeline-item"><div class="timeline-text" style="color:var(--text-muted);">${dict.noUpdates}</div></div>`;
+            }
+            html += `</div></div>`;
+            container.innerHTML = html;
+        }
+
+        async function init() {
+            await loadVersion();
+            await loadConfig();
+            await changeLang(currentLang);
+            checkRemoteVersion();
+
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id) { document.getElementById('maint-content').innerHTML = `<h2>${dict.error}</h2>`; return; }
+            try {
+                const res = await fetch(`maintenances-index.json?t=${new Date().getTime()}`);
+                if (res.ok) {
+                    const maints = await res.json();
+                    currentMaint = maints.find(i => String(i.id) === String(id));
+                    if (currentMaint) renderMaint(currentMaint);
+                    else document.getElementById('maint-content').innerHTML = `<h2>${dict.error}</h2>`;
+                }
+            } catch (err) { document.getElementById('maint-content').innerHTML = `<h2>${dict.error}</h2>`; }
+        }
+
+        init();
+    </script>
+</body>
+</html>
