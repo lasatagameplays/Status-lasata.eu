@@ -20113,5 +20113,20 @@
       "status": "UP",
       "latency": 1806
     }
+  },
+  {
+    "timestamp": "2026-08-16T01:30:47Z",
+    "US": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "EU": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    }
   }
 ]
