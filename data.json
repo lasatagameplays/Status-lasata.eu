@@ -1,5 +1,5 @@
 {
-  "last_check": "2026-08-22T22:55:30Z",
+  "last_check": "2026-08-22T23:00:57Z",
   "api_info": {
     "status": "ok",
     "count": 4,
@@ -39,19 +39,23 @@
       ],
       "regions": {
         "US": {
-          "status": "UP",
-          "latency": 511
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "EU": {
-          "status": "UP",
-          "latency": 123
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 869
+          "status": "MAINTENANCE",
+          "latency": 0
         }
       },
-      "history_file": "history/web-principal/web-principal.json"
+      "history_file": "history/web-principal/web-principal.json",
+      "active_task": {
+        "desc_es": "Reinicio semanal del sistema",
+        "desc_en": "Weekly system reboot"
+      }
     },
     {
       "id": "nube-privada",
@@ -86,19 +90,23 @@
       ],
       "regions": {
         "US": {
-          "status": "UP",
-          "latency": 367
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "EU": {
-          "status": "UP",
-          "latency": 265
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 824
+          "status": "MAINTENANCE",
+          "latency": 0
         }
       },
-      "history_file": "history/nube-privada/nube-privada.json"
+      "history_file": "history/nube-privada/nube-privada.json",
+      "active_task": {
+        "desc_es": "Reinicio semanal del sistema",
+        "desc_en": "Weekly system reboot"
+      }
     },
     {
       "id": "webmail",
@@ -133,19 +141,23 @@
       ],
       "regions": {
         "US": {
-          "status": "UP",
-          "latency": 448
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "EU": {
-          "status": "UP",
-          "latency": 197
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 813
+          "status": "MAINTENANCE",
+          "latency": 0
         }
       },
-      "history_file": "history/webmail/webmail.json"
+      "history_file": "history/webmail/webmail.json",
+      "active_task": {
+        "desc_es": "Reinicio semanal del sistema",
+        "desc_en": "Weekly system reboot"
+      }
     },
     {
       "id": "server-s1",
@@ -180,19 +192,23 @@
       ],
       "regions": {
         "US": {
-          "status": "UP",
-          "latency": 347
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "EU": {
-          "status": "UP",
-          "latency": 64
+          "status": "MAINTENANCE",
+          "latency": 0
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 736
+          "status": "MAINTENANCE",
+          "latency": 0
         }
       },
-      "history_file": "history/server-s1/server-s1.json"
+      "history_file": "history/server-s1/server-s1.json",
+      "active_task": {
+        "desc_es": "Reinicio semanal del sistema",
+        "desc_en": "Weekly system reboot"
+      }
     }
   ]
 }
