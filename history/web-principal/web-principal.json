@@ -80098,5 +80098,20 @@
       "status": "UP",
       "latency": 872
     }
+  },
+  {
+    "timestamp": "2026-08-30T01:10:38Z",
+    "US": {
+      "status": "UP",
+      "latency": 460
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 227
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 900
+    }
   }
 ]
