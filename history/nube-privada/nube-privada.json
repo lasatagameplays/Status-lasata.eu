@@ -80863,5 +80863,20 @@
       "status": "UP",
       "latency": 715
     }
+  },
+  {
+    "timestamp": "2026-08-30T05:25:35Z",
+    "US": {
+      "status": "UP",
+      "latency": 338
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 65
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 822
+    }
   }
 ]
