@@ -85528,5 +85528,20 @@
       "status": "UP",
       "latency": 701
     }
+  },
+  {
+    "timestamp": "2026-08-31T07:20:42Z",
+    "US": {
+      "status": "UP",
+      "latency": 415
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 149
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 810
+    }
   }
 ]
