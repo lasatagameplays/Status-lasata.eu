@@ -91963,5 +91963,20 @@
       "status": "UP",
       "latency": 811
     }
+  },
+  {
+    "timestamp": "2026-09-01T19:35:47Z",
+    "US": {
+      "status": "UP",
+      "latency": 929
+    },
+    "EU": {
+      "status": "DOWN",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 275
+    }
   }
 ]
