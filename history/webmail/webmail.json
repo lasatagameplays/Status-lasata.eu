@@ -93763,5 +93763,20 @@
       "status": "DOWN",
       "latency": 776
     }
+  },
+  {
+    "timestamp": "2026-09-02T05:40:41Z",
+    "US": {
+      "status": "DOWN",
+      "latency": 363
+    },
+    "EU": {
+      "status": "DOWN",
+      "latency": 136
+    },
+    "ASIA": {
+      "status": "DOWN",
+      "latency": 763
+    }
   }
 ]
