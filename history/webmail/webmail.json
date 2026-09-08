@@ -121933,5 +121933,20 @@
       "status": "DOWN",
       "latency": 0
     }
+  },
+  {
+    "timestamp": "2026-09-08T18:10:44Z",
+    "US": {
+      "status": "UP",
+      "latency": 537
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 266
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 830
+    }
   }
 ]
