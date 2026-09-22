@@ -182188,5 +182188,20 @@
       "status": "UP",
       "latency": 877
     }
+  },
+  {
+    "timestamp": "2026-09-22T17:25:33Z",
+    "US": {
+      "status": "UP",
+      "latency": 512
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 167
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 1164
+    }
   }
 ]
