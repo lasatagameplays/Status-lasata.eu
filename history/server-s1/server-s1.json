@@ -201703,5 +201703,20 @@
       "status": "UP",
       "latency": 787
     }
+  },
+  {
+    "timestamp": "2026-09-27T05:55:36Z",
+    "US": {
+      "status": "UP",
+      "latency": 523
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 150
+    },
+    "ASIA": {
+      "status": "DOWN",
+      "latency": 0
+    }
   }
 ]
