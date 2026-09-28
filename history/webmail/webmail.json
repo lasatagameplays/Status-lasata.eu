@@ -207478,5 +207478,20 @@
       "status": "UP",
       "latency": 709
     }
+  },
+  {
+    "timestamp": "2026-09-28T14:01:03Z",
+    "US": {
+      "status": "UP",
+      "latency": 542
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 137
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 851
+    }
   }
 ]
