@@ -209383,5 +209383,20 @@
       "status": "UP",
       "latency": 903
     }
+  },
+  {
+    "timestamp": "2026-09-29T00:40:37Z",
+    "US": {
+      "status": "UP",
+      "latency": 678
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 129
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 372
+    }
   }
 ]
