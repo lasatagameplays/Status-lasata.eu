@@ -211948,5 +211948,20 @@
       "status": "UP",
       "latency": 1205
     }
+  },
+  {
+    "timestamp": "2026-09-29T14:55:32Z",
+    "US": {
+      "status": "UP",
+      "latency": 490
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 155
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 885
+    }
   }
 ]
