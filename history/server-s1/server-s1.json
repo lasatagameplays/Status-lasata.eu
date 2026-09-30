@@ -216163,5 +216163,20 @@
       "status": "UP",
       "latency": 1105
     }
+  },
+  {
+    "timestamp": "2026-09-30T14:20:40Z",
+    "US": {
+      "status": "UP",
+      "latency": 485
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 121
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 814
+    }
   }
 ]
