@@ -252553,5 +252553,20 @@
       "status": "UP",
       "latency": 855
     }
+  },
+  {
+    "timestamp": "2026-10-09T02:30:48Z",
+    "US": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "EU": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    }
   }
 ]
