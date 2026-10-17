@@ -287143,5 +287143,20 @@
       "status": "MAINTENANCE",
       "latency": 0
     }
+  },
+  {
+    "timestamp": "2026-10-17T02:40:40Z",
+    "US": {
+      "status": "UP",
+      "latency": 342
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 29
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 831
+    }
   }
 ]
