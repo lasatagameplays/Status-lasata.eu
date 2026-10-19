@@ -296623,5 +296623,20 @@
       "status": "UP",
       "latency": 363
     }
+  },
+  {
+    "timestamp": "2026-10-19T07:20:37Z",
+    "US": {
+      "status": "UP",
+      "latency": 282
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 72
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 769
+    }
   }
 ]
