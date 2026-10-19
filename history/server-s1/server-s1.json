@@ -299353,5 +299353,20 @@
       "status": "UP",
       "latency": 2035
     }
+  },
+  {
+    "timestamp": "2026-10-19T22:31:03Z",
+    "US": {
+      "status": "UP",
+      "latency": 355
+    },
+    "EU": {
+      "status": "DOWN",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 843
+    }
   }
 ]
