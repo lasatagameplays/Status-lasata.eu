@@ -311953,5 +311953,20 @@
       "status": "UP",
       "latency": 1166
     }
+  },
+  {
+    "timestamp": "2026-10-22T20:30:53Z",
+    "US": {
+      "status": "UP",
+      "latency": 509
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 143
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 872
+    }
   }
 ]
