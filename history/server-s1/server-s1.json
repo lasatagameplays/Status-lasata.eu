@@ -311998,5 +311998,20 @@
       "status": "UP",
       "latency": 843
     }
+  },
+  {
+    "timestamp": "2026-10-22T20:45:40Z",
+    "US": {
+      "status": "UP",
+      "latency": 542
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 30
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 1139
+    }
   }
 ]
