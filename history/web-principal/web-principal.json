@@ -321943,5 +321943,20 @@
       "status": "UP",
       "latency": 325
     }
+  },
+  {
+    "timestamp": "2026-10-25T04:01:04Z",
+    "US": {
+      "status": "UP",
+      "latency": 470
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 86
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 848
+    }
   }
 ]
