@@ -326443,5 +326443,20 @@
       "status": "UP",
       "latency": 919
     }
+  },
+  {
+    "timestamp": "2026-10-26T05:01:06Z",
+    "US": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "EU": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "MAINTENANCE",
+      "latency": 0
+    }
   }
 ]
