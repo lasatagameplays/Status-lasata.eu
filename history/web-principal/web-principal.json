@@ -341563,5 +341563,20 @@
       "status": "UP",
       "latency": 1527
     }
+  },
+  {
+    "timestamp": "2026-10-29T17:01:11Z",
+    "US": {
+      "status": "UP",
+      "latency": 642
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 74
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 958
+    }
   }
 ]
