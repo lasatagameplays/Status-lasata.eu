@@ -346363,5 +346363,20 @@
       "status": "UP",
       "latency": 290
     }
+  },
+  {
+    "timestamp": "2026-10-30T19:40:45Z",
+    "US": {
+      "status": "UP",
+      "latency": 555
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 71
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 808
+    }
   }
 ]
