@@ -361933,5 +361933,20 @@
       "status": "UP",
       "latency": 792
     }
+  },
+  {
+    "timestamp": "2026-11-03T10:11:01Z",
+    "US": {
+      "status": "UP",
+      "latency": 531
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 112
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 648
+    }
   }
 ]
