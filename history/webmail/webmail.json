@@ -382303,5 +382303,20 @@
       "status": "UP",
       "latency": 608
     }
+  },
+  {
+    "timestamp": "2026-11-08T04:10:51Z",
+    "US": {
+      "status": "UP",
+      "latency": 456
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 93
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 800
+    }
   }
 ]
