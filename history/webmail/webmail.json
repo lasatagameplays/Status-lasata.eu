@@ -391978,5 +391978,20 @@
       "status": "UP",
       "latency": 824
     }
+  },
+  {
+    "timestamp": "2026-11-10T10:10:45Z",
+    "US": {
+      "status": "UP",
+      "latency": 405
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 154
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 883
+    }
   }
 ]
