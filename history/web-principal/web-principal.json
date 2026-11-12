@@ -402388,5 +402388,20 @@
       "status": "DOWN",
       "latency": 602
     }
+  },
+  {
+    "timestamp": "2026-11-12T20:35:39Z",
+    "US": {
+      "status": "DOWN",
+      "latency": 676
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 93
+    },
+    "ASIA": {
+      "status": "DOWN",
+      "latency": 839
+    }
   }
 ]
