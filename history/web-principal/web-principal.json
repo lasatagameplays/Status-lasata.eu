@@ -402733,5 +402733,20 @@
       "status": "DOWN",
       "latency": 1073
     }
+  },
+  {
+    "timestamp": "2026-11-12T22:30:58Z",
+    "US": {
+      "status": "DOWN",
+      "latency": 2437
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 129
+    },
+    "ASIA": {
+      "status": "DOWN",
+      "latency": 2293
+    }
   }
 ]
