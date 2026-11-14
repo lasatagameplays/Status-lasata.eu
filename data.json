@@ -1,5 +1,5 @@
 {
-  "last_check": "2026-11-14T01:31:13Z",
+  "last_check": "2026-11-14T01:35:54Z",
   "api_info": {
     "status": "ok",
     "count": 4,
@@ -39,16 +39,16 @@
       ],
       "regions": {
         "US": {
-          "status": "UP",
-          "latency": 550
-        },
-        "EU": {
           "status": "DOWN",
           "latency": 0
         },
+        "EU": {
+          "status": "UP",
+          "latency": 76
+        },
         "ASIA": {
           "status": "UP",
-          "latency": 850
+          "latency": 846
         }
       },
       "history_file": "history/web-principal/web-principal.json"
@@ -87,15 +87,15 @@
       "regions": {
         "US": {
           "status": "UP",
-          "latency": 382
+          "latency": 470
         },
         "EU": {
-          "status": "DOWN",
-          "latency": 0
+          "status": "UP",
+          "latency": 147
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 1561
+          "status": "DOWN",
+          "latency": 0
         }
       },
       "history_file": "history/nube-privada/nube-privada.json"
@@ -134,15 +134,15 @@
       "regions": {
         "US": {
           "status": "UP",
-          "latency": 504
+          "latency": 486
         },
         "EU": {
           "status": "UP",
-          "latency": 81
+          "latency": 108
         },
         "ASIA": {
-          "status": "UP",
-          "latency": 2032
+          "status": "DOWN",
+          "latency": 0
         }
       },
       "history_file": "history/webmail/webmail.json"
@@ -181,15 +181,15 @@
       "regions": {
         "US": {
           "status": "UP",
-          "latency": 351
+          "latency": 487
         },
         "EU": {
-          "status": "UP",
-          "latency": 39
+          "status": "DOWN",
+          "latency": 0
         },
         "ASIA": {
           "status": "UP",
-          "latency": 838
+          "latency": 842
         }
       },
       "history_file": "history/server-s1/server-s1.json"
