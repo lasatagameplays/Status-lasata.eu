@@ -407803,5 +407803,20 @@
       "status": "MAINTENANCE",
       "latency": 0
     }
+  },
+  {
+    "timestamp": "2026-11-14T02:41:13Z",
+    "US": {
+      "status": "UP",
+      "latency": 615
+    },
+    "EU": {
+      "status": "DOWN",
+      "latency": 0
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 1876
+    }
   }
 ]
