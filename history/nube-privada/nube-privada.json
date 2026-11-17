@@ -421993,5 +421993,20 @@
       "status": "UP",
       "latency": 515
     }
+  },
+  {
+    "timestamp": "2026-11-17T09:35:41Z",
+    "US": {
+      "status": "UP",
+      "latency": 389
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 25
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 800
+    }
   }
 ]
