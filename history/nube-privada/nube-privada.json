@@ -424528,5 +424528,20 @@
       "status": "UP",
       "latency": 778
     }
+  },
+  {
+    "timestamp": "2026-11-17T23:40:48Z",
+    "US": {
+      "status": "UP",
+      "latency": 384
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 126
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 534
+    }
   }
 ]
