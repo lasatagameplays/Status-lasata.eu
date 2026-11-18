@@ -425743,5 +425743,20 @@
       "status": "UP",
       "latency": 582
     }
+  },
+  {
+    "timestamp": "2026-11-18T06:25:39Z",
+    "US": {
+      "status": "UP",
+      "latency": 358
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 14
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 745
+    }
   }
 ]
