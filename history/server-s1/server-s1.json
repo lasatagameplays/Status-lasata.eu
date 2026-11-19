@@ -432013,5 +432013,20 @@
       "status": "UP",
       "latency": 645
     }
+  },
+  {
+    "timestamp": "2026-11-19T17:20:50Z",
+    "US": {
+      "status": "UP",
+      "latency": 444
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 85
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 863
+    }
   }
 ]
