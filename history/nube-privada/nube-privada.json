@@ -438193,5 +438193,20 @@
       "status": "MAINTENANCE",
       "latency": 0
     }
+  },
+  {
+    "timestamp": "2026-11-21T03:40:43Z",
+    "US": {
+      "status": "UP",
+      "latency": 450
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 39
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 792
+    }
   }
 ]
