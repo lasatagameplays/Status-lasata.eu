@@ -441238,5 +441238,20 @@
       "status": "UP",
       "latency": 502
     }
+  },
+  {
+    "timestamp": "2026-11-21T20:35:38Z",
+    "US": {
+      "status": "UP",
+      "latency": 361
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 53
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 870
+    }
   }
 ]
