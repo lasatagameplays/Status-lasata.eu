@@ -443383,5 +443383,20 @@
       "status": "UP",
       "latency": 1099
     }
+  },
+  {
+    "timestamp": "2026-11-22T08:30:57Z",
+    "US": {
+      "status": "UP",
+      "latency": 373
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 25
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 927
+    }
   }
 ]
