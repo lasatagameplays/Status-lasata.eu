@@ -445873,5 +445873,20 @@
       "status": "UP",
       "latency": 1097
     }
+  },
+  {
+    "timestamp": "2026-11-22T22:20:55Z",
+    "US": {
+      "status": "UP",
+      "latency": 330
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 81
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 376
+    }
   }
 ]
