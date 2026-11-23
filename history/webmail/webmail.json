@@ -447373,5 +447373,20 @@
       "status": "UP",
       "latency": 797
     }
+  },
+  {
+    "timestamp": "2026-11-23T06:40:46Z",
+    "US": {
+      "status": "UP",
+      "latency": 598
+    },
+    "EU": {
+      "status": "UP",
+      "latency": 365
+    },
+    "ASIA": {
+      "status": "UP",
+      "latency": 1006
+    }
   }
 ]
